@@ -1,1 +1,1 @@
-https://53b29461.github.io/money-manager/
+https://53b29461.github.io/money-manager/ coded by Claude Code
