@@ -1,0 +1,1110 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic Medium', 'Meiryo', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    line-height: 1.6;
+    color: #2c3e50;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 40px;
+    font-size: 2.8em;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #34495e;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    font-weight: 400;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 8px;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+}
+
+h3 {
+    color: #5a6c7d;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    font-weight: 500;
+    border-left: 4px solid #2ecc71;
+    padding-left: 15px;
+    background: linear-gradient(90deg, rgba(46, 204, 113, 0.1), transparent);
+    padding: 8px 0 8px 15px;
+    border-radius: 0 4px 4px 0;
+}
+
+section {
+    background: rgba(255, 255, 255, 0.95);
+    margin: 25px 0;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
+}
+
+/* 資産額セクション */
+.current-assets-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+}
+
+.current-assets-section h2 {
+    color: white;
+    border-bottom: 3px solid rgba(255,255,255,0.3);
+}
+
+.current-assets-section h2::after {
+    background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.3));
+}
+
+.assets-form {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.assets-form input {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    flex: 1;
+    min-width: 240px;
+    background-color: rgba(255,255,255,0.95);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.assets-form input:focus {
+    outline: none;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.3), 0 8px 25px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+}
+
+.assets-form button {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 15px 25px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    white-space: nowrap;
+}
+
+.assets-form button:hover {
+    background: rgba(255,255,255,0.3);
+    border-color: rgba(255,255,255,0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.assets-hint, .income-hint, .expense-hint, .safety-line-hint {
+    background: rgba(52, 152, 219, 0.1);
+    padding: 12px 20px;
+    border-radius: 10px;
+    border-left: 4px solid #3498db;
+    margin-top: 15px;
+}
+
+/* フォーム関連 */
+.regular-income-form, .regular-expense-form, .income-form, .expense-form, .wishlist-form {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+input[type="text"], input[type="number"], input[type="date"], input[type="month"], select {
+    padding: 12px 16px;
+    border: 2px solid #ecf0f1;
+    border-radius: 10px;
+    font-size: 14px;
+    background: white;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, input[type="month"]:focus, select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    transform: translateY(-1px);
+}
+
+/* ボタンスタイル */
+button {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    white-space: nowrap;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #2980b9, #21618c);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+.edit-btn {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+}
+
+.edit-btn:hover {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+    box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.delete-btn:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+}
+
+.update-btn {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+}
+
+.update-btn:hover {
+    background: linear-gradient(135deg, #27ae60, #229954);
+    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+}
+
+.toggle-btn {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+}
+
+.toggle-btn:hover {
+    background: linear-gradient(135deg, #8e44ad, #7d3c98);
+    box-shadow: 0 6px 20px rgba(155, 89, 182, 0.4);
+}
+
+/* 履歴表示関連 */
+.history-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.history-summary {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.summary-item {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 12px 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    min-width: 140px;
+}
+
+.summary-label {
+    font-weight: 600;
+    color: #5a6c7d;
+}
+
+.summary-amount {
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.income .summary-amount {
+    color: #27ae60;
+}
+
+.expense .summary-amount {
+    color: #e74c3c;
+}
+
+.balance.positive .summary-amount {
+    color: #27ae60;
+}
+
+.balance.negative .summary-amount {
+    color: #e74c3c;
+}
+
+.transaction-list.collapsed {
+    display: none;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 12px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.page-navigation {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.page-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+    border-radius: 8px;
+}
+
+.page-btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 月別グループ表示 */
+.month-group {
+    margin-bottom: 25px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.month-header {
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+    color: white;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.month-header h4 {
+    font-size: 1.3em;
+    font-weight: 500;
+}
+
+.month-summary {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.month-income, .month-expense, .month-balance {
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.1);
+}
+
+.month-transactions {
+    background: white;
+}
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    border-bottom: 1px solid #ecf0f1;
+    transition: background-color 0.3s ease;
+}
+
+.transaction-item:hover {
+    background: rgba(52, 152, 219, 0.05);
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-date {
+    min-width: 80px;
+    font-weight: 600;
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+
+.transaction-info {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.transaction-description {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.transaction-category {
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+
+.regular-badge {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    margin-left: 8px;
+}
+
+.transaction-amount {
+    font-weight: 700;
+    font-size: 1.1em;
+    min-width: 120px;
+    text-align: right;
+}
+
+.transaction-amount.income {
+    color: #27ae60;
+}
+
+.transaction-amount.expense {
+    color: #e74c3c;
+}
+
+.transaction-actions {
+    margin-left: 15px;
+}
+
+/* ウィッシュリスト関連 */
+.wishlist-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    gap: 15px;
+    cursor: grab;
+    user-select: none;
+}
+
+.wishlist-item:active {
+    cursor: grabbing;
+}
+
+.wishlist-item.dragging {
+    opacity: 0.5;
+    transform: rotate(5deg);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+
+.wishlist-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.priority-high {
+    border-left: 6px solid #e74c3c;
+}
+
+.priority-medium {
+    border-left: 6px solid #f39c12;
+}
+
+.priority-low {
+    border-left: 6px solid #95a5a6;
+}
+
+.drag-handle {
+    color: #95a5a6;
+    font-size: 1.2em;
+    cursor: grab;
+    padding: 8px 4px;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    transition: color 0.3s ease;
+}
+
+.drag-handle:hover {
+    color: #3498db;
+}
+
+.wishlist-item:active .drag-handle {
+    cursor: grabbing;
+}
+
+.item-rank {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    padding: 8px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+.rank-number {
+    font-size: 1.6em;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.rank-label {
+    font-size: 0.8em;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-name {
+    font-weight: 600;
+    font-size: 1.1em;
+    margin-bottom: 4px;
+}
+
+.item-details {
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+
+.item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.priority-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    border-radius: 6px;
+}
+
+.priority-up {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.priority-down {
+    background: linear-gradient(135deg, #e67e22, #d35400);
+}
+
+/* グラフ関連 */
+.chart-section {
+    background: rgba(255, 255, 255, 0.98);
+}
+
+.chart-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.safety-line-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(155, 89, 182, 0.1);
+    border-radius: 12px;
+    border-left: 4px solid #9b59b6;
+}
+
+.safety-line-form {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.chart-container {
+    position: relative;
+    height: 400px;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* タイムライン関連 */
+.timeline-safety-info {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.safety-line-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.safety-icon {
+    font-size: 1.5em;
+}
+
+.safety-text {
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.safety-description {
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
+/* ガントチャート関連 */
+.gantt-chart {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+/* ガントチャートドラッグ関連 */
+.gantt-row {
+    cursor: grab;
+    user-select: none;
+}
+
+.gantt-row:active {
+    cursor: grabbing;
+}
+
+.gantt-row.gantt-dragging {
+    opacity: 0.5;
+    transform: rotate(2deg);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+
+.gantt-drag-handle {
+    color: #95a5a6;
+    font-size: 1.1em;
+    cursor: grab;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    transition: color 0.3s ease;
+}
+
+.gantt-drag-handle:hover {
+    color: #3498db;
+}
+
+.gantt-row:active .gantt-drag-handle {
+    cursor: grabbing;
+}
+
+.gantt-header {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+    color: white;
+}
+
+.gantt-rank-header {
+    padding: 15px 20px;
+    font-weight: 600;
+    border-right: 1px solid rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+}
+
+.gantt-date-axis {
+    display: flex;
+    flex-direction: column;
+}
+
+.gantt-months {
+    display: grid;
+    grid-auto-flow: column;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    min-height: 30px;
+}
+
+.gantt-month {
+    padding: 8px 4px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9em;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gantt-weeks {
+    display: grid;
+    grid-auto-flow: column;
+    min-height: 30px;
+}
+
+.gantt-week {
+    padding: 6px 4px;
+    text-align: center;
+    font-size: 0.85em;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+    transition: background-color 0.2s ease;
+}
+
+.gantt-week.current-week {
+    background-color: rgba(46, 204, 113, 0.3);
+    color: #27ae60;
+    font-weight: 700;
+    border: 2px solid #27ae60;
+}
+
+.gantt-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    border-bottom: 1px solid #ecf0f1;
+    min-height: 60px;
+}
+
+.gantt-row:hover {
+    background: rgba(52, 152, 219, 0.02);
+}
+
+.gantt-rank-cell {
+    padding: 15px 20px;
+    border-right: 1px solid #ecf0f1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(248, 249, 250, 0.5);
+}
+
+.rank-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.rank-badge.safe {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    color: white;
+}
+
+.rank-badge.risky {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: white;
+}
+
+.rank-badge.impossible {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.rank-badge .rank-number {
+    font-size: 1.3em;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.rank-badge .rank-label {
+    font-size: 0.7em;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.gantt-rank-cell .item-name {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 0.95em;
+    line-height: 1.3;
+    margin-bottom: 8px;
+}
+
+.purchase-btn {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+}
+
+.purchase-btn:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+}
+
+.purchased-label {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.gantt-timeline-area {
+    display: grid;
+    position: relative;
+    padding: 10px 0;
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(52, 152, 219, 0.05) 2%,
+        rgba(52, 152, 219, 0.05) 98%,
+        transparent 100%
+    );
+}
+
+.gantt-bar {
+    display: flex;
+    align-items: center;
+    padding: 6px 4px;
+    border-radius: 4px;
+    margin: 2px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    min-height: 32px;
+    min-width: 8px;
+    position: relative;
+    overflow: visible;
+}
+
+.gantt-bar:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.gantt-bar.safe {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    color: white;
+}
+
+.gantt-bar.risky {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: white;
+}
+
+.gantt-bar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    font-size: 0.7em;
+    line-height: 1.1;
+    white-space: nowrap;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background: inherit;
+    padding: 4px 6px;
+    border-radius: 0 4px 4px 0;
+    z-index: 10;
+    min-width: 80px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.bar-date {
+    font-weight: 600;
+    opacity: 0.95;
+}
+
+.bar-price {
+    font-weight: 700;
+    font-size: 1em;
+}
+
+.gantt-no-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #95a5a6;
+    font-style: italic;
+    font-size: 0.9em;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 5px,
+        rgba(149, 165, 166, 0.1) 5px,
+        rgba(149, 165, 166, 0.1) 10px
+    );
+    border-radius: 4px;
+    margin: 10px 5px;
+}
+
+/* 定期収入・支出情報表示 */
+.regular-income-list, .regular-expense-list {
+    margin-top: 20px;
+}
+
+.regular-income-item, .regular-expense-item {
+    background: rgba(52, 152, 219, 0.1);
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border-left: 4px solid #3498db;
+}
+
+.regular-expense-item {
+    background: rgba(231, 76, 60, 0.1);
+    border-left-color: #e74c3c;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 2.2em;
+    }
+    
+    section {
+        padding: 20px 15px;
+    }
+    
+    .regular-income-form, .regular-expense-form, 
+    .income-form, .expense-form, .wishlist-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .regular-income-form > *, .regular-expense-form > *, 
+    .income-form > *, .expense-form > *, .wishlist-form > * {
+        width: 100%;
+    }
+    
+    .assets-form {
+        flex-direction: column;
+    }
+    
+    .history-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .history-summary {
+        justify-content: center;
+    }
+    
+    .pagination-controls {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .month-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .transaction-item {
+        flex-wrap: wrap;
+        padding: 12px 15px;
+    }
+    
+    .transaction-date {
+        min-width: auto;
+        margin-bottom: 8px;
+    }
+    
+    .transaction-actions {
+        margin-left: 0;
+        margin-top: 8px;
+    }
+    
+    .wishlist-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+    
+    .drag-handle {
+        display: none;
+    }
+    
+    .item-rank {
+        min-width: 50px;
+        padding: 6px;
+    }
+    
+    .rank-number {
+        font-size: 1.4em;
+    }
+    
+    .chart-container {
+        height: 300px;
+        padding: 15px;
+    }
+    
+    /* ガントチャートのモバイル対応 */
+    .gantt-header {
+        grid-template-columns: 150px 1fr;
+    }
+    
+    .gantt-row {
+        grid-template-columns: 150px 1fr;
+    }
+    
+    .gantt-rank-cell {
+        padding: 10px 15px;
+        gap: 10px;
+    }
+    
+    .rank-badge {
+        min-width: 40px;
+        padding: 6px;
+    }
+    
+    .rank-badge .rank-number {
+        font-size: 1.1em;
+    }
+    
+    .gantt-rank-cell .item-name {
+        font-size: 0.85em;
+    }
+    
+    .gantt-month {
+        font-size: 0.8em;
+        padding: 6px 2px;
+    }
+    
+    .gantt-day {
+        font-size: 0.7em;
+        padding: 3px 1px;
+    }
+    
+    .gantt-bar {
+        padding: 6px 8px;
+        min-height: 32px;
+    }
+    
+    .gantt-bar-content {
+        font-size: 0.75em;
+    }
+    
+    .bar-price {
+        font-size: 0.9em;
+    }
+    
+    /* ガントチャートに横スクロールを追加 */
+    .gantt-chart {
+        overflow-x: auto;
+        min-width: 100%;
+    }
+    
+    .gantt-timeline-area {
+        min-width: 400px;
+    }
+}
+
+/* アニメーション */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.transaction-item, .wishlist-item {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* スクロールバーのカスタマイズ */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #2980b9, #21618c);
+}
