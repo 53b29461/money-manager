@@ -1661,17 +1661,8 @@ class MoneyManager {
 
         this.initialAssets = amount;
         
-        // 初期資産額を収支履歴に初期設定として記録
-        const initialAssetRecord = {
-            id: Date.now(),
-            date: new Date().toISOString().split('T')[0],
-            amount: amount,
-            description: '初期資産額設定'
-        };
-        
-        // 既存の初期資産額設定を削除してから新しいものを追加
+        // 既存の初期資産額設定の収入記録があれば削除（過去の重複記録をクリーンアップ）
         this.incomeData = this.incomeData.filter(income => income.description !== '初期資産額設定');
-        this.incomeData.push(initialAssetRecord);
         
         this.saveData();
         this.updateChart(); // グラフも更新
