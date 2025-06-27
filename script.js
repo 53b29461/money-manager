@@ -335,10 +335,10 @@ class MoneyManager {
         const setting = this.regularIncomeSettings.find(s => s.id === parseInt(settingId));
         if (!setting) return;
         
-        const startDate = new Date(setting.startMonth + '-01');
-        const startMonthText = startDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long' });
+        const startDate = new Date(setting.startDate);
+        const startDateText = startDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
         
-        if (confirm(`${startMonthText}からの定期収入設定を削除しますか？`)) {
+        if (confirm(`${startDateText}からの定期収入設定を削除しますか？`)) {
             // 該当する収入データを削除
             this.incomeData = this.incomeData.filter(income => 
                 !income.isRegular || income.settingId !== parseInt(settingId)
@@ -423,7 +423,7 @@ class MoneyManager {
         });
 
         if (conflictingSetting) {
-            const overwrite = confirm(`${this.getCategoryName(category)}の${conflictingSetting.startMonth}からの設定と期間が重複しています。\n重複する期間の設定を上書きしますか？`);
+            const overwrite = confirm(`${this.getCategoryName(category)}の${conflictingSetting.startDate}からの設定と期間が重複しています。\n重複する期間の設定を上書きしますか？`);
             if (!overwrite) return;
             
             // 重複する設定のデータを削除
@@ -517,10 +517,10 @@ class MoneyManager {
         const setting = this.regularExpenseSettings.find(s => s.id === parseInt(settingId));
         if (!setting) return;
         
-        const startDate = new Date(setting.startMonth + '-01');
-        const startMonthText = startDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long' });
+        const startDate = new Date(setting.startDate);
+        const startDateText = startDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
         
-        if (confirm(`${this.getCategoryName(setting.category)}の${startMonthText}からの定期支出設定を削除しますか？`)) {
+        if (confirm(`${this.getCategoryName(setting.category)}の${startDateText}からの定期支出設定を削除しますか？`)) {
             // 該当する支出データを削除
             this.expenseData = this.expenseData.filter(expense => 
                 !expense.isRegular || expense.settingId !== parseInt(settingId)
@@ -1054,7 +1054,9 @@ class MoneyManager {
         
         // 定期収入の設定から給料日を計算
         this.regularIncomeSettings.forEach(setting => {
-            const [startYear, startMonth] = setting.startMonth.split('-').map(Number);
+            const startDate = new Date(setting.startDate);
+            const startYear = startDate.getFullYear();
+            const startMonth = startDate.getMonth() + 1; // 1ベースに変換
             
             for (let monthOffset = 0; monthOffset <= 6; monthOffset++) {
                 const salaryDate = new Date(startYear, startMonth - 1 + monthOffset, setting.day);
