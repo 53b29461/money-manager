@@ -806,12 +806,51 @@ class MoneyManager {
             });
         }
 
+        // 現在日付線プラグインを定義
+        const currentDateLinePlugin = {
+            id: 'currentDateLine',
+            afterDraw: function(chart) {
+                const ctx = chart.ctx;
+                const chartArea = chart.chartArea;
+                const today = new Date().toISOString().split('T')[0];
+                
+                // 今日の日付がラベルにあるかチェック
+                const todayIndex = labels.findIndex(label => {
+                    // ラベルから日付を抽出して比較
+                    const match = label.match(/(\d{1,2})\/(\d{1,2})/);
+                    if (match) {
+                        const month = parseInt(match[1]);
+                        const day = parseInt(match[2]);
+                        const currentYear = new Date().getFullYear();
+                        const labelDate = new Date(currentYear, month - 1, day).toISOString().split('T')[0];
+                        return labelDate === today;
+                    }
+                    return false;
+                });
+                
+                if (todayIndex >= 0) {
+                    const x = chart.scales.x.getPixelForValue(todayIndex);
+                    
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.moveTo(x, chartArea.top);
+                    ctx.lineTo(x, chartArea.bottom);
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = '#27ae60';
+                    ctx.setLineDash([8, 4]);
+                    ctx.stroke();
+                    ctx.restore();
+                }
+            }
+        };
+
         this.assetChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: labels,
                 datasets: datasets
             },
+            plugins: [currentDateLinePlugin],
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -886,42 +925,6 @@ class MoneyManager {
                             }
                         }
                     },
-                    currentDateLine: {
-                        id: 'currentDateLine',
-                        afterDraw: function(chart) {
-                            const ctx = chart.ctx;
-                            const chartArea = chart.chartArea;
-                            const today = new Date().toISOString().split('T')[0];
-                            
-                            // 今日の日付がラベルにあるかチェック
-                            const todayIndex = labels.findIndex(label => {
-                                // ラベルから日付を抽出して比較
-                                const match = label.match(/(\d{1,2})\/(\d{1,2})/);
-                                if (match) {
-                                    const month = parseInt(match[1]);
-                                    const day = parseInt(match[2]);
-                                    const currentYear = new Date().getFullYear();
-                                    const labelDate = new Date(currentYear, month - 1, day).toISOString().split('T')[0];
-                                    return labelDate === today;
-                                }
-                                return false;
-                            });
-                            
-                            if (todayIndex >= 0) {
-                                const x = chart.scales.x.getPixelForValue(todayIndex);
-                                
-                                ctx.save();
-                                ctx.beginPath();
-                                ctx.moveTo(x, chartArea.top);
-                                ctx.lineTo(x, chartArea.bottom);
-                                ctx.lineWidth = 2;
-                                ctx.strokeStyle = '#27ae60';
-                                ctx.setLineDash([5, 5]);
-                                ctx.stroke();
-                                ctx.restore();
-                            }
-                        }
-                    }
                 }
             }
         });
