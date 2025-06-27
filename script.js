@@ -559,6 +559,7 @@ class MoneyManager {
             'utilities': '光熱費',
             'subscription': 'サブスク費',
             'entertainment': '交際費',
+            'general': '総支出',
             'other': 'その他'
         };
         return categories[category] || category;
@@ -884,6 +885,42 @@ class MoneyManager {
                                 return null;
                             }
                         }
+                    },
+                    currentDateLine: {
+                        id: 'currentDateLine',
+                        afterDraw: function(chart) {
+                            const ctx = chart.ctx;
+                            const chartArea = chart.chartArea;
+                            const today = new Date().toISOString().split('T')[0];
+                            
+                            // 今日の日付がラベルにあるかチェック
+                            const todayIndex = labels.findIndex(label => {
+                                // ラベルから日付を抽出して比較
+                                const match = label.match(/(\d{1,2})\/(\d{1,2})/);
+                                if (match) {
+                                    const month = parseInt(match[1]);
+                                    const day = parseInt(match[2]);
+                                    const currentYear = new Date().getFullYear();
+                                    const labelDate = new Date(currentYear, month - 1, day).toISOString().split('T')[0];
+                                    return labelDate === today;
+                                }
+                                return false;
+                            });
+                            
+                            if (todayIndex >= 0) {
+                                const x = chart.scales.x.getPixelForValue(todayIndex);
+                                
+                                ctx.save();
+                                ctx.beginPath();
+                                ctx.moveTo(x, chartArea.top);
+                                ctx.lineTo(x, chartArea.bottom);
+                                ctx.lineWidth = 2;
+                                ctx.strokeStyle = '#27ae60';
+                                ctx.setLineDash([5, 5]);
+                                ctx.stroke();
+                                ctx.restore();
+                            }
+                        }
                     }
                 }
             }
@@ -935,6 +972,11 @@ class MoneyManager {
         if (!item) return;
         
         if (confirm(`「${item.name}」を削除しますか？`)) {
+            // 関連する購入予定支出も削除
+            this.expenseData = this.expenseData.filter(expense => 
+                !(expense.isScheduledPurchase && expense.wishlistItemId === itemId)
+            );
+            
             this.wishlistItems = this.wishlistItems.filter(item => item.id !== itemId);
             this.saveData();
             this.render();
@@ -964,11 +1006,16 @@ class MoneyManager {
         item.purchased = true;
         item.purchaseDate = purchaseDate;
 
-        // 支出データに追加
+        // 既存の購入予定支出を削除
+        this.expenseData = this.expenseData.filter(expense => 
+            !(expense.isScheduledPurchase && expense.wishlistItemId === itemId)
+        );
+
+        // 実際の購入支出として追加
         const expense = {
             id: Date.now(),
             date: purchaseDate,
-            category: 'other',
+            category: 'entertainment', // 欲しいものは交際費カテゴリ
             description: `${item.name}（欲しいもの購入）`,
             amount: item.price,
             fromWishlist: true,
@@ -1135,10 +1182,36 @@ class MoneyManager {
         this.renderTimeline();
         this.updateRegularIncomeInfo();
         this.updateRegularExpenseInfo();
+        this.updateScheduledPurchaseExpenses(); // 購入予定支出を更新
         this.updateChart();
         this.updateTransactionHistorySummary();
         this.renderMonthlyAverage();
         this.updateAssetsInput(); // 初期資産額を入力欄に表示
+    }
+
+    // 購入予定支出を自動的に支出データに追加
+    updateScheduledPurchaseExpenses() {
+        // 既存の購入予定支出を削除
+        this.expenseData = this.expenseData.filter(expense => !expense.isScheduledPurchase);
+
+        // 購入予定日があり、まだ購入していないアイテムを支出として追加
+        this.wishlistItems.forEach(item => {
+            if (item.plannedPurchaseDate && !item.purchased) {
+                const scheduledExpense = {
+                    id: `scheduled_${item.id}`,
+                    date: item.plannedPurchaseDate,
+                    category: 'entertainment', // 欲しいものは交際費カテゴリ
+                    description: `【購入予定】${item.name}`,
+                    amount: item.price,
+                    isScheduledPurchase: true,
+                    wishlistItemId: item.id
+                };
+                this.expenseData.push(scheduledExpense);
+            }
+        });
+
+        // 日付順にソート
+        this.expenseData.sort((a, b) => new Date(a.date) - new Date(b.date));
     }
 
     updateTransactionHistorySummary() {
@@ -1255,7 +1328,8 @@ class MoneyManager {
                 amount: expense.amount,
                 description: expense.description,
                 category: expense.category,
-                isRegular: expense.isRegular || false
+                isRegular: expense.isRegular || false,
+                isScheduledPurchase: expense.isScheduledPurchase || false
             });
         });
 
@@ -1316,14 +1390,16 @@ class MoneyManager {
                     weekday: 'short'
                 });
 
+                const scheduledClass = transaction.isScheduledPurchase ? 'scheduled-purchase' : '';
                 html += `
-                    <div class="transaction-item ${transaction.type}">
+                    <div class="transaction-item ${transaction.type} ${scheduledClass}">
                         <div class="transaction-date">${formattedDate}</div>
                         <div class="transaction-info">
                             <div class="transaction-description">
                                 ${transaction.description}
                                 ${transaction.category ? `<span class="transaction-category">(${this.getCategoryName(transaction.category)})</span>` : ''}
                                 ${transaction.isRegular ? '<span class="regular-badge">定期</span>' : ''}
+                                ${transaction.isScheduledPurchase ? '<span class="scheduled-badge">予定</span>' : ''}
                             </div>
                             <div class="transaction-amount ${transaction.type}">
                                 ${isIncome ? '+' : '-'}¥${transaction.amount.toLocaleString()}
@@ -1388,12 +1464,12 @@ class MoneyManager {
         if (isCollapsed) {
             container.classList.remove('collapsed');
             toggleIcon.textContent = '▲';
-            toggleBtn.innerHTML = '<span id="toggleHistoryIcon">▲</span> 履歴を隠す';
+            toggleBtn.innerHTML = '<span id="toggleHistoryIcon">▲</span>';
             this.renderTransactionHistory();
         } else {
             container.classList.add('collapsed');
             toggleIcon.textContent = '▼';
-            toggleBtn.innerHTML = '<span id="toggleHistoryIcon">▼</span> 履歴を表示';
+            toggleBtn.innerHTML = '<span id="toggleHistoryIcon">▼</span>';
         }
     }
 

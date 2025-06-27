@@ -76,6 +76,46 @@ section:hover {
     box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
 }
 
+/* 収入管理セクション（緑系） */
+.income-section {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.05), rgba(39, 174, 96, 0.05));
+    border-left: 4px solid #27ae60;
+}
+
+.income-section h2 {
+    color: #27ae60;
+    border-bottom: 3px solid #27ae60;
+}
+
+.income-section h2::after {
+    background: linear-gradient(90deg, #27ae60, #2ecc71);
+}
+
+.income-section h3 {
+    border-left-color: #27ae60;
+    background: linear-gradient(90deg, rgba(39, 174, 96, 0.1), transparent);
+}
+
+/* 支出管理セクション（赤系） */
+.expense-section {
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.05), rgba(192, 57, 43, 0.05));
+    border-left: 4px solid #e74c3c;
+}
+
+.expense-section h2 {
+    color: #e74c3c;
+    border-bottom: 3px solid #e74c3c;
+}
+
+.expense-section h2::after {
+    background: linear-gradient(90deg, #e74c3c, #c0392b);
+}
+
+.expense-section h3 {
+    border-left-color: #e74c3c;
+    background: linear-gradient(90deg, rgba(231, 76, 60, 0.1), transparent);
+}
+
 /* 資産額セクション */
 .current-assets-section {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -166,28 +206,6 @@ section:hover {
 }
 
 /* 削除ボタンのスタイリング */
-.delete-btn {
-    background-color: rgba(108, 117, 125, 0.6);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 1;
-    margin-left: 8px;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.delete-btn:hover {
-    background-color: rgba(220, 53, 69, 0.8);
-    transform: scale(1.1);
-}
 
 .item-info {
     display: flex;
@@ -287,13 +305,28 @@ button:hover {
 }
 
 .delete-btn {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    background-color: rgba(108, 117, 125, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    margin-left: 8px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
 }
 
 .delete-btn:hover {
-    background: linear-gradient(135deg, #c0392b, #a93226);
-    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+    background-color: rgba(220, 53, 69, 0.8);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
 }
 
 .update-btn {
@@ -470,6 +503,24 @@ button:hover {
 .transaction-item.scheduled-purchase:hover {
     background: rgba(155, 89, 182, 0.1);
     opacity: 1;
+}
+
+.transaction-item.income {
+    background: linear-gradient(90deg, rgba(39, 174, 96, 0.1), rgba(39, 174, 96, 0.05));
+    border-left: 3px solid #27ae60;
+}
+
+.transaction-item.expense {
+    background: linear-gradient(90deg, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05));
+    border-left: 3px solid #e74c3c;
+}
+
+.transaction-item.income:hover {
+    background: linear-gradient(90deg, rgba(39, 174, 96, 0.15), rgba(39, 174, 96, 0.08));
+}
+
+.transaction-item.expense:hover {
+    background: linear-gradient(90deg, rgba(231, 76, 60, 0.15), rgba(231, 76, 60, 0.08));
 }
 
 .transaction-date {
