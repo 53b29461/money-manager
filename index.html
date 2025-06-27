@@ -72,6 +72,20 @@
                     <input type="text" id="expenseDescription" placeholder="支出内容">
                     <button id="addExpense">追加</button>
                 </div>
+                <div class="regular-expense">
+                    <h3>定期支出設定</h3>
+                    <input type="date" id="regularExpenseStart">
+                    <select id="regularExpenseCategory">
+                        <option value="food">食費</option>
+                        <option value="utilities">光熱費</option>
+                        <option value="entertainment">交際費</option>
+                        <option value="general">総支出</option>
+                        <option value="other">その他</option>
+                    </select>
+                    <input type="number" id="regularExpenseAmount" placeholder="月額">
+                    <input type="number" id="regularExpenseMonths" placeholder="継続月数">
+                    <button id="generateRegularExpense">定期支出生成</button>
+                </div>
             </div>
         </section>
 
@@ -87,16 +101,18 @@
             <div id="wishlistContainer"></div>
         </section>
 
-        <!-- 可視化エリア -->
-        <section class="visualization-section">
+        <!-- 資産推移グラフ -->
+        <section class="chart-section">
+            <h2>📊 資産推移</h2>
             <div class="chart-container">
-                <h2>📊 資産推移</h2>
                 <canvas id="assetChart"></canvas>
             </div>
-            <div class="timeline-container">
-                <h2>📅 購入タイムライン</h2>
-                <div id="purchaseTimeline"></div>
-            </div>
+        </section>
+
+        <!-- 購入タイムライン -->
+        <section class="timeline-section">
+            <h2>📅 購入タイムライン</h2>
+            <div id="purchaseTimeline"></div>
         </section>
 
         <!-- 履歴 -->

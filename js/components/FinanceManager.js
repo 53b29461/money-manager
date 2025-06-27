@@ -30,7 +30,14 @@ class FinanceManager {
             expenseCategory: document.getElementById('expenseCategory'),
             expenseAmount: document.getElementById('expenseAmount'),
             expenseDescription: document.getElementById('expenseDescription'),
-            addExpenseBtn: document.getElementById('addExpense')
+            addExpenseBtn: document.getElementById('addExpense'),
+            
+            // 定期支出関連
+            regularExpenseStart: document.getElementById('regularExpenseStart'),
+            regularExpenseCategory: document.getElementById('regularExpenseCategory'),
+            regularExpenseAmount: document.getElementById('regularExpenseAmount'),
+            regularExpenseMonths: document.getElementById('regularExpenseMonths'),
+            generateRegularExpenseBtn: document.getElementById('generateRegularExpense')
         };
     }
 
@@ -50,6 +57,11 @@ class FinanceManager {
             this.addExpense();
         });
 
+        // 定期支出生成
+        this.elements.generateRegularExpenseBtn.addEventListener('click', () => {
+            this.generateRegularExpense();
+        });
+
         // Enterキーでの追加
         this.elements.incomeAmount.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.addIncome();
@@ -65,6 +77,7 @@ class FinanceManager {
         this.elements.incomeDate.value = today;
         this.elements.expenseDate.value = today;
         this.elements.regularIncomeStart.value = today;
+        this.elements.regularExpenseStart.value = today;
     }
 
     addIncome() {
@@ -144,6 +157,58 @@ class FinanceManager {
         alert(`${transactions.length}件の定期収入を生成しました`);
     }
 
+    generateRegularExpense() {
+        const startDate = this.elements.regularExpenseStart.value;
+        const category = this.elements.regularExpenseCategory.value;
+        const amount = parseFloat(this.elements.regularExpenseAmount.value);
+        const months = parseInt(this.elements.regularExpenseMonths.value);
+
+        if (!startDate || !amount || amount <= 0 || !months || months <= 0) {
+            alert('すべての項目を正しく入力してください');
+            return;
+        }
+
+        if (months > 24) {
+            alert('継続月数は24ヶ月以下で入力してください');
+            return;
+        }
+
+        const transactions = [];
+        const start = new Date(startDate);
+
+        for (let i = 0; i < months; i++) {
+            const expenseDate = new Date(start);
+            expenseDate.setMonth(start.getMonth() + i);
+
+            // 過去の日付は除外
+            if (expenseDate >= new Date()) {
+                const transaction = new Transaction({
+                    type: 'expense',
+                    amount: amount,
+                    date: expenseDate,
+                    description: `定期支出`,
+                    category: category,
+                    isRegular: true
+                });
+                transactions.push(transaction);
+            }
+        }
+
+        if (transactions.length === 0) {
+            alert('生成される定期支出がありません（すべて過去の日付）');
+            return;
+        }
+
+        const confirmMessage = `${transactions.length}件の定期支出を生成しますか？\n（¥${amount.toLocaleString()} × ${transactions.length}ヶ月）`;
+        if (!confirm(confirmMessage)) return;
+
+        this.saveTransactions(transactions);
+        this.clearRegularExpenseForm();
+        this.notifyUpdate();
+
+        alert(`${transactions.length}件の定期支出を生成しました`);
+    }
+
     addExpense() {
         const date = this.elements.expenseDate.value;
         const category = this.elements.expenseCategory.value;
@@ -195,6 +260,12 @@ class FinanceManager {
         this.elements.regularIncomeAmount.value = '';
         this.elements.regularIncomeMonths.value = '';
         // 開始日は今日のままにしておく
+    }
+
+    clearRegularExpenseForm() {
+        this.elements.regularExpenseAmount.value = '';
+        this.elements.regularExpenseMonths.value = '';
+        // 開始日とカテゴリはそのままにしておく
     }
 
     clearExpenseForm() {
