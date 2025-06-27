@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資産管理 & 購買計画システム</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💰 賢い資産管理システム</h1>
+            <p class="subtitle">欲しいものと資産バランスを見える化</p>
+        </header>
+
+        <!-- 資産概要ダッシュボード -->
+        <section class="dashboard">
+            <div class="asset-card">
+                <h3>💎 現在の資産</h3>
+                <div class="asset-amount" id="currentAssets">¥0</div>
+                <div class="asset-input">
+                    <input type="number" id="initialAssets" placeholder="初期資産額">
+                    <button id="setInitialAssets">設定</button>
+                </div>
+            </div>
+            <div class="safety-card">
+                <h3>🛡️ セーフティーライン</h3>
+                <div class="safety-amount" id="safetyAmount">未設定</div>
+                <div class="safety-input">
+                    <input type="number" id="safetyLine" placeholder="最低保持額">
+                    <button id="setSafetyLine">設定</button>
+                </div>
+            </div>
+            <div class="next-purchase-card">
+                <h3>🎯 次の購入予定</h3>
+                <div id="nextPurchase">なし</div>
+            </div>
+        </section>
+
+        <!-- 収支管理 -->
+        <section class="finance-section">
+            <div class="income-panel">
+                <h2>📈 収入管理</h2>
+                <div class="form-group">
+                    <input type="date" id="incomeDate">
+                    <input type="number" id="incomeAmount" placeholder="金額">
+                    <input type="text" id="incomeDescription" placeholder="収入源">
+                    <button id="addIncome">追加</button>
+                </div>
+                <div class="regular-income">
+                    <h3>定期収入設定</h3>
+                    <input type="date" id="regularIncomeStart">
+                    <input type="number" id="regularIncomeAmount" placeholder="月額">
+                    <input type="number" id="regularIncomeMonths" placeholder="継続月数">
+                    <button id="generateRegularIncome">定期収入生成</button>
+                </div>
+            </div>
+            
+            <div class="expense-panel">
+                <h2>📉 支出管理</h2>
+                <div class="form-group">
+                    <input type="date" id="expenseDate">
+                    <select id="expenseCategory">
+                        <option value="food">食費</option>
+                        <option value="utilities">光熱費</option>
+                        <option value="entertainment">交際費</option>
+                        <option value="general">総支出</option>
+                        <option value="other">その他</option>
+                    </select>
+                    <input type="number" id="expenseAmount" placeholder="金額">
+                    <input type="text" id="expenseDescription" placeholder="支出内容">
+                    <button id="addExpense">追加</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 欲しいものリスト -->
+        <section class="wishlist-section">
+            <h2>🛍️ 欲しいものリスト</h2>
+            <div class="wishlist-form">
+                <input type="text" id="itemName" placeholder="商品名">
+                <input type="number" id="itemPrice" placeholder="価格">
+                <input type="date" id="plannedDate" placeholder="購入予定日">
+                <button id="addWishlistItem">追加</button>
+            </div>
+            <div id="wishlistContainer"></div>
+        </section>
+
+        <!-- 可視化エリア -->
+        <section class="visualization-section">
+            <div class="chart-container">
+                <h2>📊 資産推移</h2>
+                <canvas id="assetChart"></canvas>
+            </div>
+            <div class="timeline-container">
+                <h2>📅 購入タイムライン</h2>
+                <div id="purchaseTimeline"></div>
+            </div>
+        </section>
+
+        <!-- 履歴 -->
+        <section class="history-section">
+            <h2>📋 取引履歴</h2>
+            <div class="history-controls">
+                <button id="toggleHistory">▼</button>
+                <div class="history-summary" id="historySummary"></div>
+            </div>
+            <div id="historyContainer" class="collapsed"></div>
+        </section>
+    </div>
+
+    <script src="js/models/Transaction.js"></script>
+    <script src="js/models/WishlistItem.js"></script>
+    <script src="js/services/StorageService.js"></script>
+    <script src="js/services/FinanceCalculator.js"></script>
+    <script src="js/components/Dashboard.js"></script>
+    <script src="js/components/FinanceManager.js"></script>
+    <script src="js/components/WishlistManager.js"></script>
+    <script src="js/components/ChartManager.js"></script>
+    <script src="js/components/HistoryManager.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
