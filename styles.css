@@ -165,6 +165,45 @@ section:hover {
     color: #2c3e50;
 }
 
+/* 削除ボタンのスタイリング */
+.delete-btn {
+    background-color: rgba(108, 117, 125, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    margin-left: 8px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.delete-btn:hover {
+    background-color: rgba(220, 53, 69, 0.8);
+    transform: scale(1.1);
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.item-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* フォーム関連 */
 .form-group {
     display: flex;

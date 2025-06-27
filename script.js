@@ -931,9 +931,14 @@ class MoneyManager {
     }
 
     deleteItem(itemId) {
-        this.wishlistItems = this.wishlistItems.filter(item => item.id !== itemId);
-        this.saveData();
-        this.render();
+        const item = this.wishlistItems.find(item => item.id === itemId);
+        if (!item) return;
+        
+        if (confirm(`「${item.name}」を削除しますか？`)) {
+            this.wishlistItems = this.wishlistItems.filter(item => item.id !== itemId);
+            this.saveData();
+            this.render();
+        }
     }
 
     // 欲しいもの購入機能
@@ -1574,7 +1579,10 @@ class MoneyManager {
                 <span class="rank-number">${itemData.rank}</span>
                 <span class="rank-label">位</span>
             </div>
-            <div class="item-name">${itemData.item.name}</div>
+            <div class="item-info">
+                <div class="item-name">${itemData.item.name}</div>
+                <button class="delete-btn" onclick="moneyManager.deleteItem(${itemData.item.id})" title="削除">×</button>
+            </div>
             ${purchaseButtonHtml}
         `;
         row.appendChild(rankCell);
