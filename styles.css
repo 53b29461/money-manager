@@ -461,6 +461,17 @@ button:hover {
     border-bottom: none;
 }
 
+.transaction-item.scheduled-purchase {
+    background: rgba(155, 89, 182, 0.05);
+    border-left: 3px dashed #9b59b6;
+    opacity: 0.85;
+}
+
+.transaction-item.scheduled-purchase:hover {
+    background: rgba(155, 89, 182, 0.1);
+    opacity: 1;
+}
+
 .transaction-date {
     min-width: 80px;
     font-weight: 600;
@@ -485,6 +496,15 @@ button:hover {
 
 .regular-badge {
     background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    margin-left: 8px;
+}
+
+.scheduled-badge {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
     color: white;
     padding: 2px 8px;
     border-radius: 4px;
