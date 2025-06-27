@@ -28,17 +28,16 @@
         
         <!-- 収入情報セクション -->
         <section class="income-section">
-            <h2>収入情報</h2>
+            <h2>収入管理</h2>
             
             <!-- 定期収入設定 -->
             <div class="regular-income-section">
-                <h3 id="regularIncomeTitle">定期収入設定（公務員向け）</h3>
+                <h3 id="regularIncomeTitle">定期収入設定</h3>
                 <div class="regular-income-form">
                     <input type="hidden" id="editingIncomeId" value="">
-                    <input type="month" id="regularIncomeStartMonth" placeholder="開始月">
-                    <input type="number" id="regularIncomeDay" placeholder="給料日（日）" min="1" max="31" value="25">
+                    <input type="date" id="regularIncomeStartDate" placeholder="給料日">
                     <input type="number" id="regularIncomeAmount" placeholder="月収金額">
-                    <input type="number" id="regularIncomeMonths" placeholder="何ヶ月分生成" min="1" max="24" value="12">
+                    <input type="number" id="regularIncomeMonths" placeholder="繰り返し月数" min="1" max="24" value="12">
                     <button id="generateRegularIncomeBtn">定期収入を生成</button>
                     <button id="updateRegularIncomeBtn" style="display: none;">更新</button>
                     <button id="cancelEditIncomeBtn" style="display: none;">キャンセル</button>
@@ -67,11 +66,10 @@
             
             <!-- 定期支出設定 -->
             <div class="regular-expense-section">
-                <h3 id="regularExpenseTitle">定期支出設定（毎月）</h3>
+                <h3 id="regularExpenseTitle">定期支出設定</h3>
                 <div class="regular-expense-form">
                     <input type="hidden" id="editingExpenseId" value="">
-                    <input type="month" id="regularExpenseStartMonth" placeholder="開始月">
-                    <input type="number" id="regularExpenseDay" placeholder="支出日（日）" min="1" max="31" value="25">
+                    <input type="date" id="regularExpenseStartDate" placeholder="支出日">
                     <select id="regularExpenseCategory">
                         <option value="food">食費</option>
                         <option value="communication">通信費</option>
@@ -81,7 +79,7 @@
                         <option value="entertainment">交際費</option>
                     </select>
                     <input type="number" id="regularExpenseAmount" placeholder="月額支出">
-                    <input type="number" id="regularExpenseMonths" placeholder="何ヶ月分生成" min="1" max="24" value="12">
+                    <input type="number" id="regularExpenseMonths" placeholder="繰り返し月数" min="1" max="24" value="12">
                     <button id="generateRegularExpenseBtn">定期支出を生成</button>
                     <button id="updateRegularExpenseBtn" style="display: none;">更新</button>
                     <button id="cancelEditExpenseBtn" style="display: none;">キャンセル</button>

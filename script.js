@@ -18,17 +18,18 @@ class MoneyManager {
     init() {
         this.loadData();
         this.bindEvents();
-        this.setDefaultStartMonth();
+        this.setDefaultStartDate();
         this.render();
     }
 
-    setDefaultStartMonth() {
+    setDefaultStartDate() {
         const today = new Date();
         const currentYear = today.getFullYear();
         const currentMonth = today.getMonth() + 1; // 1ベースに変換
-        const defaultMonth = `${currentYear}-${currentMonth.toString().padStart(2, '0')}`;
-        document.getElementById('regularIncomeStartMonth').value = defaultMonth;
-        document.getElementById('regularExpenseStartMonth').value = defaultMonth;
+        const defaultDay = 25; // デフォルトの給料日
+        const defaultDate = `${currentYear}-${currentMonth.toString().padStart(2, '0')}-${defaultDay.toString().padStart(2, '0')}`;
+        document.getElementById('regularIncomeStartDate').value = defaultDate;
+        document.getElementById('regularExpenseStartDate').value = defaultDate;
     }
 
     bindEvents() {
@@ -216,24 +217,25 @@ class MoneyManager {
     }
 
     generateRegularIncome() {
-        const startMonth = document.getElementById('regularIncomeStartMonth').value;
-        const day = parseInt(document.getElementById('regularIncomeDay').value);
+        const startDate = document.getElementById('regularIncomeStartDate').value;
         const amount = parseInt(document.getElementById('regularIncomeAmount').value);
         const months = parseInt(document.getElementById('regularIncomeMonths').value);
 
-        if (!startMonth || !day || !amount || !months || day < 1 || day > 31 || amount <= 0 || months < 1) {
-            alert('正しい値を入力してください（開始月、給料日: 1-31, 金額: 正の数, 月数: 1以上）');
+        if (!startDate || !amount || !months || amount <= 0 || months < 1) {
+            alert('正しい値を入力してください（開始日、金額: 正の数, 月数: 1以上）');
             return;
         }
 
-        // 開始月を解析
-        const [startYear, startMonthNum] = startMonth.split('-').map(num => parseInt(num));
-        const startMonthIndex = startMonthNum - 1; // JavaScriptの月は0ベース
+        // 開始日を解析
+        const startDateObj = new Date(startDate);
+        const startYear = startDateObj.getFullYear();
+        const startMonthIndex = startDateObj.getMonth();
+        const day = startDateObj.getDate();
 
         // 同じ期間の設定が既に存在するかチェック
         const endDate = new Date(startYear, startMonthIndex + months - 1);
         const conflictingSetting = this.regularIncomeSettings.find(setting => {
-            const existingStart = new Date(setting.startMonth + '-01');
+            const existingStart = new Date(setting.startDate);
             const existingEnd = new Date(setting.startYear, existingStart.getMonth() + setting.months - 1);
             const newStart = new Date(startYear, startMonthIndex);
             
@@ -242,7 +244,7 @@ class MoneyManager {
         });
 
         if (conflictingSetting) {
-            const overwrite = confirm(`${conflictingSetting.startMonth}からの設定と期間が重複しています。\n重複する期間の設定を上書きしますか？`);
+            const overwrite = confirm(`${conflictingSetting.startDate}からの設定と期間が重複しています。\n重複する期間の設定を上書きしますか？`);
             if (!overwrite) return;
             
             // 重複する設定のデータを削除
@@ -259,7 +261,7 @@ class MoneyManager {
         // 新しい定期収入設定を作成
         const newSetting = {
             id: Date.now(),
-            startMonth: startMonth,
+            startDate: startDate,
             startYear: startYear,
             day: day,
             amount: amount,
@@ -302,15 +304,15 @@ class MoneyManager {
             let html = '<div class="regular-income-list">';
             
             this.regularIncomeSettings.forEach(setting => {
-                const startDate = new Date(setting.startMonth + '-01');
-                const startMonthText = startDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long' });
+                const startDate = new Date(setting.startDate);
+                const startDateText = startDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
                 const endMonth = new Date(setting.startYear, startDate.getMonth() + setting.months - 1);
                 const endMonthText = endMonth.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long' });
                 const incomeCount = this.incomeData.filter(income => income.settingId === setting.id).length;
                 
                 html += `
                     <div class="regular-income-item">
-                        <p><strong>${startMonthText}〜${endMonthText}:</strong> 毎月${setting.day}日に¥${setting.amount.toLocaleString()}</p>
+                        <p><strong>${startDateText}〜${endMonthText}:</strong> 毎月${setting.day}日に¥${setting.amount.toLocaleString()}</p>
                         <p><small>生成済み: ${incomeCount}/${setting.months}件</small></p>
                         <div class="item-actions">
                             <button class="edit-btn" onclick="moneyManager.editRegularIncomeSetting('${setting.id}')">編集</button>
@@ -393,25 +395,26 @@ class MoneyManager {
     }
 
     generateRegularExpense() {
-        const startMonth = document.getElementById('regularExpenseStartMonth').value;
-        const day = parseInt(document.getElementById('regularExpenseDay').value);
+        const startDate = document.getElementById('regularExpenseStartDate').value;
         const category = document.getElementById('regularExpenseCategory').value;
         const amount = parseInt(document.getElementById('regularExpenseAmount').value);
         const months = parseInt(document.getElementById('regularExpenseMonths').value);
 
-        if (!startMonth || !day || !amount || !months || day < 1 || day > 31 || amount <= 0 || months < 1) {
-            alert('正しい値を入力してください（開始月、支出日: 1-31, 金額: 正の数, 月数: 1以上）');
+        if (!startDate || !amount || !months || amount <= 0 || months < 1) {
+            alert('正しい値を入力してください（開始日、金額: 正の数, 月数: 1以上）');
             return;
         }
 
-        // 開始月を解析
-        const [startYear, startMonthNum] = startMonth.split('-').map(num => parseInt(num));
-        const startMonthIndex = startMonthNum - 1; // JavaScriptの月は0ベース
+        // 開始日を解析
+        const startDateObj = new Date(startDate);
+        const startYear = startDateObj.getFullYear();
+        const startMonthIndex = startDateObj.getMonth();
+        const day = startDateObj.getDate();
 
         // 同じカテゴリ・期間の設定が既に存在するかチェック
         const endDate = new Date(startYear, startMonthIndex + months - 1);
         const conflictingSetting = this.regularExpenseSettings.find(setting => {
-            const existingStart = new Date(setting.startMonth + '-01');
+            const existingStart = new Date(setting.startDate);
             const existingEnd = new Date(setting.startYear, existingStart.getMonth() + setting.months - 1);
             const newStart = new Date(startYear, startMonthIndex);
             
@@ -437,7 +440,7 @@ class MoneyManager {
         // 新しい定期支出設定を作成
         const newSetting = {
             id: Date.now(),
-            startMonth: startMonth,
+            startDate: startDate,
             startYear: startYear,
             day: day,
             category: category,
@@ -483,15 +486,15 @@ class MoneyManager {
             let html = '<div class="regular-expense-list">';
             
             this.regularExpenseSettings.forEach(setting => {
-                const startDate = new Date(setting.startMonth + '-01');
-                const startMonthText = startDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long' });
+                const startDate = new Date(setting.startDate);
+                const startDateText = startDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
                 const endMonth = new Date(setting.startYear, startDate.getMonth() + setting.months - 1);
                 const endMonthText = endMonth.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long' });
                 const expenseCount = this.expenseData.filter(expense => expense.settingId === setting.id).length;
                 
                 html += `
                     <div class="regular-expense-item">
-                        <p><strong>${this.getCategoryName(setting.category)} (${startMonthText}〜${endMonthText}):</strong> 毎月${setting.day}日に¥${setting.amount.toLocaleString()}</p>
+                        <p><strong>${this.getCategoryName(setting.category)} (${startDateText}〜${endMonthText}):</strong> 毎月${setting.day}日に¥${setting.amount.toLocaleString()}</p>
                         <p><small>生成済み: ${expenseCount}/${setting.months}件</small></p>
                         <div class="item-actions">
                             <button class="edit-btn" onclick="moneyManager.editRegularExpenseSetting('${setting.id}')">編集</button>
@@ -1736,8 +1739,7 @@ class MoneyManager {
 
         // フォームに既存データを設定
         document.getElementById('editingIncomeId').value = setting.id;
-        document.getElementById('regularIncomeStartMonth').value = setting.startMonth;
-        document.getElementById('regularIncomeDay').value = setting.day;
+        document.getElementById('regularIncomeStartDate').value = setting.startDate;
         document.getElementById('regularIncomeAmount').value = setting.amount;
         document.getElementById('regularIncomeMonths').value = setting.months;
 
@@ -1809,19 +1811,17 @@ class MoneyManager {
     cancelEditIncome() {
         // フォームをクリア
         document.getElementById('editingIncomeId').value = '';
-        document.getElementById('regularIncomeStartMonth').value = '';
-        document.getElementById('regularIncomeDay').value = '25';
         document.getElementById('regularIncomeAmount').value = '';
         document.getElementById('regularIncomeMonths').value = '12';
 
         // UI切り替え
-        document.getElementById('regularIncomeTitle').textContent = '定期収入設定（公務員向け）';
+        document.getElementById('regularIncomeTitle').textContent = '定期収入設定';
         document.getElementById('generateRegularIncomeBtn').style.display = 'inline-block';
         document.getElementById('updateRegularIncomeBtn').style.display = 'none';
         document.getElementById('cancelEditIncomeBtn').style.display = 'none';
         
         // デフォルト開始月を設定
-        this.setDefaultStartMonth();
+        this.setDefaultStartDate();
     }
 
     // 定期支出編集機能
@@ -1831,8 +1831,7 @@ class MoneyManager {
 
         // フォームに既存データを設定
         document.getElementById('editingExpenseId').value = setting.id;
-        document.getElementById('regularExpenseStartMonth').value = setting.startMonth;
-        document.getElementById('regularExpenseDay').value = setting.day;
+        document.getElementById('regularExpenseStartDate').value = setting.startDate;
         document.getElementById('regularExpenseCategory').value = setting.category;
         document.getElementById('regularExpenseAmount').value = setting.amount;
         document.getElementById('regularExpenseMonths').value = setting.months;
@@ -1909,20 +1908,18 @@ class MoneyManager {
     cancelEditExpense() {
         // フォームをクリア
         document.getElementById('editingExpenseId').value = '';
-        document.getElementById('regularExpenseStartMonth').value = '';
-        document.getElementById('regularExpenseDay').value = '25';
         document.getElementById('regularExpenseCategory').value = 'food';
         document.getElementById('regularExpenseAmount').value = '';
         document.getElementById('regularExpenseMonths').value = '12';
 
         // UI切り替え
-        document.getElementById('regularExpenseTitle').textContent = '定期支出設定（毎月）';
+        document.getElementById('regularExpenseTitle').textContent = '定期支出設定';
         document.getElementById('generateRegularExpenseBtn').style.display = 'inline-block';
         document.getElementById('updateRegularExpenseBtn').style.display = 'none';
         document.getElementById('cancelEditExpenseBtn').style.display = 'none';
         
         // デフォルト開始月を設定
-        this.setDefaultStartMonth();
+        this.setDefaultStartDate();
     }
 
 
