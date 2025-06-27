@@ -1752,12 +1752,11 @@ class MoneyManager {
 
     updateRegularIncome() {
         const editingId = parseInt(document.getElementById('editingIncomeId').value);
-        const startMonth = document.getElementById('regularIncomeStartMonth').value;
-        const day = parseInt(document.getElementById('regularIncomeDay').value);
+        const startDate = document.getElementById('regularIncomeStartDate').value;
         const amount = parseInt(document.getElementById('regularIncomeAmount').value);
         const months = parseInt(document.getElementById('regularIncomeMonths').value);
 
-        if (!startMonth || !day || !amount || !months || day < 1 || day > 31 || amount <= 0 || months < 1) {
+        if (!startDate || !amount || !months || amount <= 0 || months < 1) {
             alert('正しい値を入力してください');
             return;
         }
@@ -1771,11 +1770,15 @@ class MoneyManager {
         // 既存の収入データを削除
         this.incomeData = this.incomeData.filter(income => income.settingId !== editingId);
 
+        // 日付を解析
+        const startDateObj = new Date(startDate);
+        const startYear = startDateObj.getFullYear();
+        const day = startDateObj.getDate();
+
         // 設定を更新
-        const [startYear, startMonthNum] = startMonth.split('-').map(num => parseInt(num));
         this.regularIncomeSettings[settingIndex] = {
             ...oldSetting,
-            startMonth: startMonth,
+            startDate: startDate,
             startYear: startYear,
             day: day,
             amount: amount,
@@ -1783,7 +1786,7 @@ class MoneyManager {
         };
 
         // 新しいデータを生成
-        const startMonthIndex = startMonthNum - 1;
+        const startMonthIndex = startDateObj.getMonth();
         for (let i = 0; i < months; i++) {
             const currentDate = new Date(startYear, startMonthIndex + i, day);
             if (currentDate.getMonth() !== (startMonthIndex + i) % 12) {
@@ -1845,13 +1848,12 @@ class MoneyManager {
 
     updateRegularExpense() {
         const editingId = parseInt(document.getElementById('editingExpenseId').value);
-        const startMonth = document.getElementById('regularExpenseStartMonth').value;
-        const day = parseInt(document.getElementById('regularExpenseDay').value);
+        const startDate = document.getElementById('regularExpenseStartDate').value;
         const category = document.getElementById('regularExpenseCategory').value;
         const amount = parseInt(document.getElementById('regularExpenseAmount').value);
         const months = parseInt(document.getElementById('regularExpenseMonths').value);
 
-        if (!startMonth || !day || !category || !amount || !months || day < 1 || day > 31 || amount <= 0 || months < 1) {
+        if (!startDate || !category || !amount || !months || amount <= 0 || months < 1) {
             alert('正しい値を入力してください');
             return;
         }
@@ -1865,11 +1867,15 @@ class MoneyManager {
         // 既存の支出データを削除
         this.expenseData = this.expenseData.filter(expense => expense.settingId !== editingId);
 
+        // 日付を解析
+        const startDateObj = new Date(startDate);
+        const startYear = startDateObj.getFullYear();
+        const day = startDateObj.getDate();
+
         // 設定を更新
-        const [startYear, startMonthNum] = startMonth.split('-').map(num => parseInt(num));
         this.regularExpenseSettings[settingIndex] = {
             ...oldSetting,
-            startMonth: startMonth,
+            startDate: startDate,
             startYear: startYear,
             day: day,
             category: category,
@@ -1878,7 +1884,7 @@ class MoneyManager {
         };
 
         // 新しいデータを生成
-        const startMonthIndex = startMonthNum - 1;
+        const startMonthIndex = startDateObj.getMonth();
         for (let i = 0; i < months; i++) {
             const currentDate = new Date(startYear, startMonthIndex + i, day);
             if (currentDate.getMonth() !== (startMonthIndex + i) % 12) {
