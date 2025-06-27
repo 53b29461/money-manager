@@ -1667,15 +1667,33 @@ class MoneyManager {
         
         this.saveData();
         this.updateChart(); // グラフも更新
+        this.updateAssetsInput(); // 表示を更新
 
         // 初期資産額は1回設定なので入力欄は残す（クリアしない）
     }
 
-    // 初期資産額を入力欄に表示
+    // 初期資産額を入力欄と表示欄に表示
     updateAssetsInput() {
         const assetsInput = document.getElementById('currentAssets');
-        if (assetsInput && this.initialAssets > 0) {
-            assetsInput.value = this.initialAssets;
+        const assetsDisplay = document.getElementById('currentAssetsDisplay');
+        const assetsAmount = document.getElementById('assetsAmount');
+        
+        if (this.initialAssets > 0) {
+            // 入力欄に表示
+            if (assetsInput) {
+                assetsInput.value = this.initialAssets;
+            }
+            
+            // 設定済み初期資産額の表示
+            if (assetsDisplay && assetsAmount) {
+                assetsAmount.textContent = this.initialAssets.toLocaleString();
+                assetsDisplay.style.display = 'block';
+            }
+        } else {
+            // 初期資産額が設定されていない場合は非表示
+            if (assetsDisplay) {
+                assetsDisplay.style.display = 'none';
+            }
         }
     }
 

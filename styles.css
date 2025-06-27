@@ -147,6 +147,24 @@ section:hover {
     margin-top: 15px;
 }
 
+.assets-display {
+    background: rgba(46, 204, 113, 0.1);
+    padding: 15px 20px;
+    border-radius: 10px;
+    border-left: 4px solid #2ecc71;
+    margin-top: 15px;
+}
+
+.assets-display p {
+    margin: 0;
+    font-size: 1.1em;
+    color: #27ae60;
+}
+
+.assets-display strong {
+    color: #2c3e50;
+}
+
 /* フォーム関連 */
 .regular-income-form, .regular-expense-form, .income-form, .expense-form, .wishlist-form {
     display: flex;
