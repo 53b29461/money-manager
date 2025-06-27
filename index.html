@@ -35,12 +35,23 @@
                 <h3 id="regularIncomeTitle">定期収入設定</h3>
                 <div class="regular-income-form">
                     <input type="hidden" id="editingIncomeId" value="">
-                    <input type="date" id="regularIncomeStartDate" placeholder="給料日">
-                    <input type="number" id="regularIncomeAmount" placeholder="月収金額">
-                    <input type="number" id="regularIncomeMonths" placeholder="繰り返し月数" min="1" max="24" value="12">
-                    <button id="generateRegularIncomeBtn">定期収入を生成</button>
-                    <button id="updateRegularIncomeBtn" style="display: none;">更新</button>
-                    <button id="cancelEditIncomeBtn" style="display: none;">キャンセル</button>
+                    <div class="form-group">
+                        <label for="regularIncomeStartDate">給料日</label>
+                        <input type="date" id="regularIncomeStartDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="regularIncomeAmount">月収金額</label>
+                        <input type="number" id="regularIncomeAmount" placeholder="例: 250000">
+                    </div>
+                    <div class="form-group">
+                        <label for="regularIncomeMonths">何ヶ月分生成するか</label>
+                        <input type="number" id="regularIncomeMonths" min="1" max="24" value="12">
+                    </div>
+                    <div class="form-buttons">
+                        <button id="generateRegularIncomeBtn">定期収入を生成</button>
+                        <button id="updateRegularIncomeBtn" style="display: none;">更新</button>
+                        <button id="cancelEditIncomeBtn" style="display: none;">キャンセル</button>
+                    </div>
                 </div>
                 <div class="income-hint">
                     <small>💡 年度変更（4月）や昇給時期に合わせて開始月を設定できます</small>
@@ -69,20 +80,34 @@
                 <h3 id="regularExpenseTitle">定期支出設定</h3>
                 <div class="regular-expense-form">
                     <input type="hidden" id="editingExpenseId" value="">
-                    <input type="date" id="regularExpenseStartDate" placeholder="支出日">
-                    <select id="regularExpenseCategory">
-                        <option value="food">食費</option>
-                        <option value="communication">通信費</option>
-                        <option value="clothing">服飾費</option>
-                        <option value="utilities">光熱費</option>
-                        <option value="subscription">サブスク費</option>
-                        <option value="entertainment">交際費</option>
-                    </select>
-                    <input type="number" id="regularExpenseAmount" placeholder="月額支出">
-                    <input type="number" id="regularExpenseMonths" placeholder="繰り返し月数" min="1" max="24" value="12">
-                    <button id="generateRegularExpenseBtn">定期支出を生成</button>
-                    <button id="updateRegularExpenseBtn" style="display: none;">更新</button>
-                    <button id="cancelEditExpenseBtn" style="display: none;">キャンセル</button>
+                    <div class="form-group">
+                        <label for="regularExpenseStartDate">支出日</label>
+                        <input type="date" id="regularExpenseStartDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="regularExpenseCategory">カテゴリ</label>
+                        <select id="regularExpenseCategory">
+                            <option value="food">食費</option>
+                            <option value="communication">通信費</option>
+                            <option value="clothing">服飾費</option>
+                            <option value="utilities">光熱費</option>
+                            <option value="subscription">サブスク費</option>
+                            <option value="entertainment">交際費</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="regularExpenseAmount">月額支出</label>
+                        <input type="number" id="regularExpenseAmount" placeholder="例: 50000">
+                    </div>
+                    <div class="form-group">
+                        <label for="regularExpenseMonths">何ヶ月分生成するか</label>
+                        <input type="number" id="regularExpenseMonths" min="1" max="24" value="12">
+                    </div>
+                    <div class="form-buttons">
+                        <button id="generateRegularExpenseBtn">定期支出を生成</button>
+                        <button id="updateRegularExpenseBtn" style="display: none;">更新</button>
+                        <button id="cancelEditExpenseBtn" style="display: none;">キャンセル</button>
+                    </div>
                 </div>
                 <div class="expense-hint">
                     <small>💡 給料日と同じ日に支出が反映されます。カテゴリごとに設定してください。</small>

@@ -166,7 +166,32 @@ section:hover {
 }
 
 /* フォーム関連 */
-.regular-income-form, .regular-expense-form, .income-form, .expense-form, .wishlist-form {
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.regular-income-form, .regular-expense-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.income-form, .expense-form, .wishlist-form {
     display: flex;
     gap: 12px;
     margin-bottom: 20px;
