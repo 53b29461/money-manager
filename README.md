@@ -10,4 +10,9 @@ https://53b29461.github.io/money-manager/
 - 支出の記録
 - Chart.jsによる資産推移グラフ
 
+## 開発環境
+- HTML/CSS/JavaScript（バニラJS）
+- Chart.js（グラフ表示）
+- GitHub Pages（ホスティング）
+
 coded by Claude Code
