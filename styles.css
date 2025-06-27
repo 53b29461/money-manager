@@ -484,9 +484,10 @@ button:hover {
     padding: 15px 25px;
     border-bottom: 1px solid #ecf0f1;
     transition: background-color 0.3s ease;
+    background: white;
 }
 
-.transaction-item:hover {
+.transaction-item:hover:not(.income):not(.expense) {
     background: rgba(52, 152, 219, 0.05);
 }
 
