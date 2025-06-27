@@ -1105,7 +1105,7 @@ class MoneyManager {
     calculateCurrentBalance() {
         const totalIncome = this.incomeData.reduce((sum, income) => sum + income.amount, 0);
         const totalExpense = this.expenseData.reduce((sum, expense) => sum + expense.amount, 0);
-        return totalIncome - totalExpense;
+        return this.initialAssets + totalIncome - totalExpense;
     }
     
     // 新しい購入ルールに従った購入予定日計算
