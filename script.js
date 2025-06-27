@@ -625,41 +625,7 @@ class MoneyManager {
         };
     }
 
-    // 初期資産額設定メソッド
-    setInitialAssets() {
-        const assetInput = document.getElementById('currentAssets');
-        const amount = parseInt(assetInput.value);
 
-        if (!amount || amount < 0) {
-            alert('正しい資産額を入力してください');
-            return;
-        }
-
-        this.initialAssets = amount;
-        
-        // 初期資産額を収支履歴に初期設定として記録
-        const initialAssetRecord = {
-            id: Date.now(),
-            date: new Date().toISOString().split('T')[0],
-            amount: amount,
-            description: '初期資産額設定'
-        };
-        
-        // 既存の初期資産額設定を削除してから新しいものを追加
-        this.incomeData = this.incomeData.filter(income => income.description !== '初期資産額設定');
-        this.incomeData.push(initialAssetRecord);
-        
-        this.saveData();
-        this.render();
-
-        // フォームをクリア
-        assetInput.value = '';
-    }
-
-    updateAssetsDisplay() {
-        // 資産額表示要素が削除されたため、処理はスキップ
-        // 初期資産額は収支履歴に反映される
-    }
 
     // 資産推移計算メソッド
     calculateAssetProgression(months = 6) {
@@ -1161,7 +1127,6 @@ class MoneyManager {
         this.updateRegularExpenseInfo();
         this.updateChart();
         this.updateTransactionHistorySummary();
-        this.updateAssetsDisplay();
         this.renderMonthlyAverage();
     }
 
@@ -1174,8 +1139,7 @@ class MoneyManager {
             updateBtn.onclick = () => {
                 this.updateTransactionHistorySummary();
                 this.renderTransactionHistory();
-                this.updateAssetsDisplay();
-            };
+                    };
         }
         
         // サマリー情報を計算
@@ -1716,10 +1680,6 @@ class MoneyManager {
         assetsInput.value = '';
     }
 
-    // 資産額表示の更新（表示要素が削除されたため空の処理）
-    updateAssetsDisplay() {
-        // 資産額表示要素が削除されたため、処理はスキップ
-    }
 
     // セーフティーライン設定
     setSafetyLine() {
