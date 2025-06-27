@@ -506,21 +506,21 @@ button:hover {
 }
 
 .transaction-item.income {
-    background: linear-gradient(90deg, rgba(39, 174, 96, 0.4), rgba(39, 174, 96, 0.3));
-    border-left: 3px solid #27ae60;
+    background: linear-gradient(90deg, rgba(39, 174, 96, 0.4), rgba(39, 174, 96, 0.3)) !important;
+    border-left: 3px solid #27ae60 !important;
 }
 
 .transaction-item.expense {
-    background: linear-gradient(90deg, rgba(231, 76, 60, 0.4), rgba(231, 76, 60, 0.3));
-    border-left: 3px solid #e74c3c;
+    background: linear-gradient(90deg, rgba(231, 76, 60, 0.4), rgba(231, 76, 60, 0.3)) !important;
+    border-left: 3px solid #e74c3c !important;
 }
 
 .transaction-item.income:hover {
-    background: linear-gradient(90deg, rgba(39, 174, 96, 0.5), rgba(39, 174, 96, 0.4));
+    background: linear-gradient(90deg, rgba(39, 174, 96, 0.5), rgba(39, 174, 96, 0.4)) !important;
 }
 
 .transaction-item.expense:hover {
-    background: linear-gradient(90deg, rgba(231, 76, 60, 0.5), rgba(231, 76, 60, 0.4));
+    background: linear-gradient(90deg, rgba(231, 76, 60, 0.5), rgba(231, 76, 60, 0.4)) !important;
 }
 
 .transaction-date {
