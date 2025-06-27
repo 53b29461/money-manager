@@ -1128,6 +1128,7 @@ class MoneyManager {
         this.updateChart();
         this.updateTransactionHistorySummary();
         this.renderMonthlyAverage();
+        this.updateAssetsInput(); // 初期資産額を入力欄に表示
     }
 
     updateTransactionHistorySummary() {
@@ -1667,8 +1668,15 @@ class MoneyManager {
         this.saveData();
         this.updateChart(); // グラフも更新
 
-        // 入力欄をクリア
-        assetsInput.value = '';
+        // 初期資産額は1回設定なので入力欄は残す（クリアしない）
+    }
+
+    // 初期資産額を入力欄に表示
+    updateAssetsInput() {
+        const assetsInput = document.getElementById('currentAssets');
+        if (assetsInput && this.initialAssets > 0) {
+            assetsInput.value = this.initialAssets;
+        }
     }
 
 
